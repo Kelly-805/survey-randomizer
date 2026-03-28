@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>問卷跳轉中</title>
+    <script>
+        // 1. 在這裡放入你的四個問卷連結
+        var urls = [
+            "https://forms.gle/HegobV12iUFLSdLx6",
+            "https://forms.gle/487af5xucE6czg676",
+            "https://forms.gle/fF3hhNojJ4m15jdx7",
+            "https://forms.gle/GFAWcQc3Ep83A11Q7"
+        ];
+
+        // 2. 隨機選取一個
+        var randomIndex = Math.floor(Math.random() * urls.length);
+        var targetUrl = urls[randomIndex];
+
+        // 3. 執行跳轉
+        window.onload = function() {
+            if (targetUrl) {
+                window.location.replace(targetUrl);
+            }
+        };
+    </script>
+</head>
+<body style="font-family: sans-serif; text-align: center; padding-top: 50px;">
+    <h2>正在載入問卷情境...</h2>
+    <p>如果畫面長時間沒有動，請點擊下方按鈕：</p>
+    <script>
+        document.write('<a href="' + targetUrl + '" style="display:inline-block; padding:15px 25px; background-color:#4285F4; color:white; text-decoration:none; border-radius:5px;">進入問卷</a>');
+    </script>
+</body>
+</html>
