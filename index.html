@@ -3,8 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>隨機分配系統</title>
+    <title>問卷載入中</title>
+    <style>
+        /* 簡單的載入動畫與樣式 */
+        body { font-family: -apple-system, sans-serif; background-color: #fafafa; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .loader-container { text-align: center; }
+        .loader { border: 4px solid #f3f3f3; border-top: 4px solid #3498db; border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; margin: 0 auto 15px; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        p { color: #666; font-size: 16px; }
+        #fallback-link { margin-top: 20px; font-size: 14px; color: #3498db; text-decoration: none; display: none; }
+    </style>
     <script>
+        // 1. 你的問卷網址
         var urls = [
             "https://forms.gle/HegobV12iUFLSdLx6",
             "https://forms.gle/487af5xucE6czg676",
@@ -12,31 +22,25 @@
             "https://forms.gle/GFAWcQc3Ep83A11Q7"
         ];
 
-        // 使用更強大的隨機數產生方式
+        // 2. 隨機選取
         var randomIndex = Math.floor(Math.random() * urls.length);
-        var targetUrl = urls[randomIndex];
+        var targetUrl = urls[randomIndex] + "?v=" + new Date().getTime();
 
-        window.onload = function() {
-            // 在螢幕上顯示抽到的編號，方便你測試
-            document.getElementById("debug").innerHTML = "抽到第 " + (randomIndex + 1) + " 份問卷";
-            
-            // 延遲 1.5 秒再跳轉，讓你測試時看得清楚
-            setTimeout(function() {
-                if (targetUrl) {
-                    window.location.replace(targetUrl + "?t=" + new Date().getTime());
-                }
-            }, 1500);
-        };
+        // 3. 立即跳轉
+        window.location.replace(targetUrl);
+
+        // 如果 3 秒後還沒跳轉，顯示手動點擊連結
+        setTimeout(function() {
+            document.getElementById('fallback-link').style.display = 'inline-block';
+            document.getElementById('fallback-link').href = targetUrl;
+        }, 3000);
     </script>
 </head>
-<body style="font-family:sans-serif; text-align:center; padding-top:100px; background-color:#f9f9f9;">
-    <div style="display:inline-block; padding:40px; background:white; border-radius:15px; box-shadow:0 4px 15px rgba(0,0,0,0.1);">
-        <h2 id="debug">正在隨機抽取情境...</h2>
-        <p>系統正在為您分配實驗組別</p>
-        <div style="margin-top:20px; color:#666;">若長時間未跳轉，請點擊下方：</div>
-        <script>
-            document.write('<a href="' + targetUrl + '" style="color:#4285F4; text-decoration:none; font-weight:bold;">[ 手動進入問卷 ]</a>');
-        </script>
+<body>
+    <div class="loader-container">
+        <div class="loader"></div>
+        <p>正在載入問卷，請稍候...</p>
+        <a id="fallback-link" href="#">[ 若長時間未跳轉請點此 ]</a>
     </div>
 </body>
 </html>
