@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>問卷跳轉中</title>
+    <title>隨機分配系統</title>
     <script>
-        // 1. 在這裡放入你的四個問卷連結
         var urls = [
             "https://forms.gle/HegobV12iUFLSdLx6",
             "https://forms.gle/487af5xucE6czg676",
@@ -13,23 +12,31 @@
             "https://forms.gle/GFAWcQc3Ep83A11Q7"
         ];
 
-        // 2. 隨機選取一個
+        // 使用更強大的隨機數產生方式
         var randomIndex = Math.floor(Math.random() * urls.length);
         var targetUrl = urls[randomIndex];
 
-        // 3. 執行跳轉
         window.onload = function() {
-            if (targetUrl) {
-                window.location.replace(targetUrl);
-            }
+            // 在螢幕上顯示抽到的編號，方便你測試
+            document.getElementById("debug").innerHTML = "抽到第 " + (randomIndex + 1) + " 份問卷";
+            
+            // 延遲 1.5 秒再跳轉，讓你測試時看得清楚
+            setTimeout(function() {
+                if (targetUrl) {
+                    window.location.replace(targetUrl + "?t=" + new Date().getTime());
+                }
+            }, 1500);
         };
     </script>
 </head>
-<body style="font-family: sans-serif; text-align: center; padding-top: 50px;">
-    <h2>正在載入問卷情境...</h2>
-    <p>如果畫面長時間沒有動，請點擊下方按鈕：</p>
-    <script>
-        document.write('<a href="' + targetUrl + '" style="display:inline-block; padding:15px 25px; background-color:#4285F4; color:white; text-decoration:none; border-radius:5px;">進入問卷</a>');
-    </script>
+<body style="font-family:sans-serif; text-align:center; padding-top:100px; background-color:#f9f9f9;">
+    <div style="display:inline-block; padding:40px; background:white; border-radius:15px; box-shadow:0 4px 15px rgba(0,0,0,0.1);">
+        <h2 id="debug">正在隨機抽取情境...</h2>
+        <p>系統正在為您分配實驗組別</p>
+        <div style="margin-top:20px; color:#666;">若長時間未跳轉，請點擊下方：</div>
+        <script>
+            document.write('<a href="' + targetUrl + '" style="color:#4285F4; text-decoration:none; font-weight:bold;">[ 手動進入問卷 ]</a>');
+        </script>
+    </div>
 </body>
 </html>
